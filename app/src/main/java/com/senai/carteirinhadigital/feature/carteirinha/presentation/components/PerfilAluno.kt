@@ -42,11 +42,11 @@ fun PerfilAluno(
                 )
         )
         InfoAluno(
-            label = "Nome",
+            label = "",
             value = nome
         )
         InfoAluno(
-            label = "Curso",
+            label = "",
             value = curso,
             fontSizeValue = 25.sp,
             fontWeightValue = FontWeight.Bold

@@ -23,7 +23,7 @@ fun UnidadeCurricularScreen(
 
     LazyColumn(
         modifier = Modifier
-            .background(MaterialTheme.colorScheme.onPrimary)
+            .background(MaterialTheme.colorScheme.primary)
             .fillMaxSize()
             .padding(
                   horizontal = 20.dp,

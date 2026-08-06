@@ -24,7 +24,7 @@ import com.senai.carteirinhadigital.feature.carteirinha.presentation.components.
 fun CarteirinhaScreen(modifier: Modifier = Modifier) {
     Box {
         Image(
-            painter = painterResource(id = R.drawable.bg2),
+            painter = painterResource(id = R.drawable.redbg),
             contentDescription = "Fundo",
             modifier = Modifier
                 .fillMaxSize(),
@@ -50,10 +50,10 @@ fun CarteirinhaScreen(modifier: Modifier = Modifier) {
             )
 
             Image(
-                painter = painterResource(id = R.drawable.senaip),
+                painter = painterResource(id = R.drawable.senai),
                 contentDescription = "Fundo",
                 modifier = Modifier
-                    .size(220.dp)
+                    .size(160.dp)
             )
 
         }
