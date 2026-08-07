@@ -22,7 +22,7 @@ import com.senai.carteirinhadigital.R
 fun PerfilAluno(
     nome: String,
     curso: String,
-    idFoto: Int = R.drawable.icon
+    idFoto: Int = R.drawable.cavera
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(10.dp),

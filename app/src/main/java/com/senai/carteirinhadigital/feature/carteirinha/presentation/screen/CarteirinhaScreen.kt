@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -45,7 +46,7 @@ fun CarteirinhaScreen(modifier: Modifier = Modifier) {
                 conteudo = "90000000001755125820",
                 modifier = Modifier
                     .padding(top = 50.dp)
-                    .size(200.dp)
+                    .size(250.dp)
                     .border(2.dp, Color.Black)
             )
 
@@ -53,7 +54,7 @@ fun CarteirinhaScreen(modifier: Modifier = Modifier) {
                 painter = painterResource(id = R.drawable.senai),
                 contentDescription = "Fundo",
                 modifier = Modifier
-                    .size(160.dp)
+                    .width(200.dp)
             )
 
         }
