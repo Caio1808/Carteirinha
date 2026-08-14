@@ -10,69 +10,70 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.senai.carteirinhadigital.feature.unidadescurriculares.domain.model.UnidadeCurricular
 
+// Definição das cores personalizadas
+private val Vinho = Color(0xFF8B0000)
+private val PretoAcinzentado = Color(0xFF2B2B2B)
+
 @Composable
 fun UnidadeCurricularCard(
     modifier: Modifier = Modifier,
     unidadeCurricular: UnidadeCurricular
 ) {
-
     Card(
-        modifier = modifier,
+        modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color(0xFF1C1C1E) // preto acinzentado
+            containerColor = Color.White // Fundo Branco
         ),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
-
         Column(
-            modifier = Modifier
-                .padding(16.dp),
+            modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
 
-            // TÍTULO (AMARELO + BOLD)
+
             Text(
                 text = unidadeCurricular.nome,
                 style = MaterialTheme.typography.titleLarge,
-                color = Color(0xFFFFD54F), // amarelo
+                color = Vinho,
                 fontWeight = FontWeight.Bold
             )
 
-            // PROFESSOR (BRANCO)
             Text(
                 text = "Professor: ${unidadeCurricular.professor}",
                 style = MaterialTheme.typography.bodyMedium,
-                color = Color.White
+                color = PretoAcinzentado
             )
 
-            // NOTAS
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-
                 Text(
                     text = "N1: ${unidadeCurricular.nota1}",
-                    color = Color(0xFFFFD54F) // amarelo
+                    color = PretoAcinzentado,
+                    fontWeight = FontWeight.Medium
                 )
 
                 Text(
                     text = "N2: ${unidadeCurricular.nota2}",
-                    color = Color(0xFFFFD54F) // amarelo
+                    color = PretoAcinzentado,
+                    fontWeight = FontWeight.Medium
                 )
 
                 Text(
                     text = "Média: ${unidadeCurricular.media}",
-                    color = Color.White
+                    color = Vinho, // Destaque em Vinho para a média
+                    fontWeight = FontWeight.Bold
                 )
             }
 
-            // FALTAS
+
             Text(
                 text = "Faltas: ${unidadeCurricular.faltas}",
                 style = MaterialTheme.typography.bodyMedium,
-                color = Color.White
+                color = PretoAcinzentado
             )
         }
     }

@@ -76,7 +76,7 @@ fun LoginScreen(
                         fontSize = 44.sp
                     )
 
-                    Spacer(modifier = Modifier.height(70.dp))
+                    Spacer(modifier = Modifier.height(50.dp))
 
                     // Campo de Email
                     OutlinedTextField(
@@ -148,7 +148,7 @@ fun LoginScreen(
                     contentDescription = "Logo SENAI",
                     modifier = Modifier
                         .align(Alignment.BottomCenter)
-                        .padding(bottom = 30.dp)
+                        .padding(bottom = 60.dp)
                         .width(200.dp)
                 )
             }
