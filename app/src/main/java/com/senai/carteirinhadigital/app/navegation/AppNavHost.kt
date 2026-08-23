@@ -9,8 +9,13 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.senai.carteirinhadigital.feature.carteirinha.presentation.screen.CarteirinhaScreen
+import com.senai.carteirinhadigital.feature.home.presentation.screen.HomeProfScreen
+import com.senai.carteirinhadigital.feature.home.presentation.screen.HomeProfScreen
 import com.senai.carteirinhadigital.feature.home.presentation.screen.HomeScreen
 import com.senai.carteirinhadigital.feature.login.presentation.screen.LoginScreen
+import com.senai.carteirinhadigital.feature.turmas.domain.model.Turmas
+import com.senai.carteirinhadigital.feature.turmas.presetation.screen.TurmasScreen
+import com.senai.carteirinhadigital.feature.unidadescurriculares.presentation.screen.UcProfScreen
 import com.senai.carteirinhadigital.feature.unidadescurriculares.presentation.screen.UnidadeCurricularScreen
 
 @Composable
@@ -51,6 +56,16 @@ fun AppNavHost(
                     modifier = Modifier.padding(innerPadding)
                 )
             }
+        }
+
+        composable(Routes.HomeProf.route) {
+            HomeProfScreen(navController = navController)
+        }
+        composable(Routes.Turmas.route) {
+            TurmasScreen(navController = navController)
+        }
+        composable(Routes.UcProf.route) {
+            UcProfScreen(navController = navController)
         }
     }
 }

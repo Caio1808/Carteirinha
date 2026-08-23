@@ -101,7 +101,6 @@ fun HomeScreen(
             }
         }
 
-        // Novo Botão Quadrado com Imagem (Canto Inferior Esquerdo)
         Button(
             onClick = {
                 navController.navigate(Routes.Login.route)
@@ -117,8 +116,8 @@ fun HomeScreen(
             )
         ) {
             Image(
-                painter = painterResource(id = R.drawable.deslogar), // Substitua pelo ID do seu ícone/imagem
-                contentDescription = "Botão de Ação",
+                painter = painterResource(id = R.drawable.deslogar),
+                contentDescription = "Botão de Logout",
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Fit
             )

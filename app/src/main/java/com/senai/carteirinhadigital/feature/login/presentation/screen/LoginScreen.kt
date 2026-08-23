@@ -26,11 +26,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.senai.carteirinhadigital.R // Certifique-se de importar o R do seu pacote
+import com.senai.carteirinhadigital.R
 import com.senai.carteirinhadigital.app.navegation.Routes
 import com.senai.carteirinhadigital.core.desingsystem.theme.Montserrat
 
@@ -41,6 +41,7 @@ fun LoginScreen(
 ) {
     var email by remember { mutableStateOf("") }
     var senha by remember { mutableStateOf("") }
+    var errorMessage by remember { mutableStateOf("") }
 
     Box(modifier = modifier.fillMaxSize()) {
         // Imagem de Fundo
@@ -54,7 +55,6 @@ fun LoginScreen(
         Box(
             modifier = Modifier.fillMaxSize()
         ) {
-
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,
@@ -76,13 +76,14 @@ fun LoginScreen(
                         fontSize = 44.sp
                     )
 
-                    Spacer(modifier = Modifier.height(50.dp))
+                    Spacer(modifier = Modifier.height(30.dp))
 
                     // Campo de Email
                     OutlinedTextField(
                         value = email,
                         onValueChange = { novoTexto ->
                             email = novoTexto
+                            errorMessage = ""
                         },
                         modifier = Modifier.fillMaxWidth(),
                         label = { Text(text = "Email") },
@@ -96,14 +97,14 @@ fun LoginScreen(
                         )
                     )
 
-                    Spacer(modifier = Modifier.height(5.dp))
-
                     // Campo de Senha
                     OutlinedTextField(
                         value = senha,
                         onValueChange = { novoTexto ->
                             senha = novoTexto
+                            errorMessage = ""
                         },
+                        visualTransformation = PasswordVisualTransformation(),
                         modifier = Modifier.fillMaxWidth(),
                         label = { Text(text = "Senha") },
                         colors = OutlinedTextFieldDefaults.colors(
@@ -116,11 +117,39 @@ fun LoginScreen(
                         )
                     )
 
-                    Spacer(modifier = Modifier.height(40.dp))
+                    // Mensagem de Erro (se houver)
+                    if (errorMessage.isNotEmpty()) {
+                        Text(
+                            text = errorMessage,
+                            color = Color.Yellow,
+                            fontSize = 14.sp
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.height(20.dp))
 
                     // Botão
                     Button(
-                        onClick = { navController.navigate(Routes.Home.route) },
+                        onClick = {
+                            val emailTrimmed = email.trim()
+                            val senhaTrimmed = senha.trim()
+
+                            when {
+                                emailTrimmed == "aluno@senai.br" && senhaTrimmed == "123456" -> {
+                                    navController.navigate(Routes.Home.route) {
+                                        popUpTo(Routes.Login.route) { inclusive = true }
+                                    }
+                                }
+                                emailTrimmed == "professor@senai.br" && senhaTrimmed == "123456" -> {
+                                    navController.navigate(Routes.HomeProf.route) {
+                                        popUpTo(Routes.Login.route) { inclusive = true }
+                                    }
+                                }
+                                else -> {
+                                    errorMessage = "E-mail ou senha inválidos!"
+                                }
+                            }
+                        },
                         modifier = Modifier.fillMaxWidth(),
                         colors = ButtonDefaults.buttonColors(
                             containerColor = Color.White,
@@ -134,11 +163,8 @@ fun LoginScreen(
                             fontSize = 15.sp
                         )
                     }
-
                 }
-
-        }
-
+            }
 
             Box(
                 modifier = Modifier.fillMaxSize()
@@ -152,7 +178,6 @@ fun LoginScreen(
                         .width(200.dp)
                 )
             }
-
         }
     }
 }

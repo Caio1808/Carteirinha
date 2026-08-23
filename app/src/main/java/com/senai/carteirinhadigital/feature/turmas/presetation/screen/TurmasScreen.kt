@@ -1,7 +1,6 @@
-package com.senai.carteirinhadigital.feature.unidadescurriculares.presentation.screen
+package com.senai.carteirinhadigital.feature.turmas.presetation.screen
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -24,33 +23,28 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.senai.carteirinhadigital.R
-import com.senai.carteirinhadigital.feature.unidadescurriculares.data.dataSource
-import com.senai.carteirinhadigital.feature.unidadescurriculares.presentation.components.UnidadeCurricularCard
+import com.senai.carteirinhadigital.feature.turmas.domain.model.Turmas
+import com.senai.carteirinhadigital.feature.turmas.presetation.components.TurmasCard
+import com.senai.carteirinhadigital.feature.turmas.data.dataSource
 
-// Definição das cores personalizadas
-val Vinho = Color(0xFF8B0000)
-val PretoAcinzentado = Color(0xFF2B2B2B)
-val Branco = Color.White
+
 
 @Composable
-fun UnidadeCurricularScreen(
+fun TurmasScreen(
     modifier: Modifier = Modifier,
     navController: NavHostController
-){
-    val unidadesCurriculares = dataSource()
+) {
+    // 1. Instancia a lista do dataSource de turmas
+    val listaTurmas = dataSource()
     val headerHeight = 90.dp
 
-    Box(
-        modifier = Modifier.fillMaxSize()
-    ) {
-
+    Box(modifier = Modifier.fillMaxSize()) {
         Image(
-            painter = painterResource(id = R.drawable.redbg),
+            painter = painterResource(id = R.drawable.blackbg),
             contentDescription = "Fundo da Tela",
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop
         )
-
 
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
@@ -62,10 +56,11 @@ fun UnidadeCurricularScreen(
             ),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            items(unidadesCurriculares) { unidadeCurricular ->
-                UnidadeCurricularCard(
-                    unidadeCurricular = unidadeCurricular,
 
+            items(listaTurmas) { turma ->
+                TurmasCard(
+                    turmas = turma,
+                    navController = navController
                 )
             }
         }
@@ -78,7 +73,7 @@ fun UnidadeCurricularScreen(
                 .padding(horizontal = 20.dp, vertical = 16.dp),
             contentAlignment = Alignment.CenterStart
         ) {
-            // Botão Fixo no Canto Superior Esquerdo
+
             Button(
                 onClick = {
                     navController.popBackStack()

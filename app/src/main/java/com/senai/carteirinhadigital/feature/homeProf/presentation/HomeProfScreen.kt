@@ -31,7 +31,7 @@ import com.senai.carteirinhadigital.app.navegation.Routes
 import com.senai.carteirinhadigital.core.desingsystem.theme.Montserrat
 
 @Composable
-fun HomeProf(
+fun HomeProfScreen(
     navController: NavHostController,
     modifier: Modifier = Modifier
 ){
@@ -66,7 +66,7 @@ fun HomeProf(
                 horizontalArrangement = Arrangement.spacedBy(20.dp)
             ) {
                 Button(
-                    onClick = { navController.navigate(Routes.Carteirinha.route) },
+                    onClick = { navController.navigate(Routes.Turmas.route) },
                     modifier = Modifier.width(260.dp).height(80.dp),
                     shape = RoundedCornerShape(10.dp),
                     colors = ButtonDefaults.buttonColors(
@@ -85,7 +85,7 @@ fun HomeProf(
             Spacer(modifier = Modifier.height(70.dp))
 
             Button(
-                onClick = { navController.navigate(Routes.UnidadesCurriculares.route) },
+                onClick = { navController.navigate(Routes.UcProf.route) },
                 modifier = Modifier.width(260.dp).height(80.dp),
                 shape = RoundedCornerShape(10.dp),
                 colors = ButtonDefaults.buttonColors(
@@ -117,8 +117,8 @@ fun HomeProf(
             )
         ) {
             Image(
-                painter = painterResource(id = R.drawable.deslogar), // Substitua pelo ID do seu ícone/imagem
-                contentDescription = "Botão de Ação",
+                painter = painterResource(id = R.drawable.deslogar),
+                contentDescription = "Botão de Logout",
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Fit
             )
