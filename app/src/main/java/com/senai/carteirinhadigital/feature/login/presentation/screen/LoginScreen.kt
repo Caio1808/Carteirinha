@@ -16,7 +16,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,20 +27,44 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.senai.carteirinhadigital.R
 import com.senai.carteirinhadigital.app.navegation.Routes
+import com.senai.carteirinhadigital.app.navegation.session.SessionViewModel
 import com.senai.carteirinhadigital.core.desingsystem.theme.Montserrat
+import com.senai.carteirinhadigital.feature.login.domain.model.UsuarioLogado
+import com.senai.carteirinhadigital.feature.login.presentation.LoginEvent
+import com.senai.carteirinhadigital.feature.login.presentation.LoginViewModel
 
 @Composable
 fun LoginScreen(
-    navController: NavHostController,
-    modifier: Modifier = Modifier
-) {
+    modifier: Modifier = Modifier,
+    navController: NavHostController = NavHostController(
+        LocalContext.current
+    ),
+    viewModel: LoginViewModel = viewModel(),
+    onLoginSucesso:(UsuarioLogado)-> Unit = {}
+
+    ) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(uiState.usuarioLogado) {
+        uiState.usuarioLogado?.let{
+                usuario ->
+            viewModel.onEvent(LoginEvent.OnNavegacaoRealizada)
+            onLoginSucesso(usuario)
+        }
+    }
+
+
     var email by remember { mutableStateOf("") }
     var senha by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf("") }
@@ -74,6 +100,10 @@ fun LoginScreen(
                         color = Color.White,
                         fontFamily = Montserrat,
                         fontSize = 44.sp
+                    )
+                    TextField(
+                        value = uiState.usuario, onValueChange = {
+                        }
                     )
 
                     Spacer(modifier = Modifier.height(30.dp))
