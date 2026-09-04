@@ -1,5 +1,6 @@
 package com.senai.carteirinhadigital.feature.login.presentation.screen
 
+import android.R.attr.value
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -12,7 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -34,11 +34,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.senai.carteirinhadigital.R
 import com.senai.carteirinhadigital.app.navegation.Routes
-import com.senai.carteirinhadigital.app.navegation.session.SessionViewModel
 import com.senai.carteirinhadigital.core.desingsystem.theme.Montserrat
 import com.senai.carteirinhadigital.feature.login.domain.model.UsuarioLogado
 import com.senai.carteirinhadigital.feature.login.presentation.LoginEvent
@@ -103,6 +101,7 @@ fun LoginScreen(
                     )
                     TextField(
                         value = uiState.usuario, onValueChange = {
+                            viewModel.onEvent(LoginEvent.OnUsuarioChange(value))
                         }
                     )
 

@@ -39,6 +39,9 @@ fun AppNavHost(
                 onLoginSucesso = {
                     usuario ->
 
+                    sessionViewModel.setusuarioLogado(usuario)
+                    navController.navigate(Routes.Home.route)
+
                 }
             )
         }
