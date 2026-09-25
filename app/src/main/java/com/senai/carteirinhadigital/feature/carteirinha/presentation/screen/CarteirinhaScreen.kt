@@ -1,63 +1,52 @@
 package com.senai.carteirinhadigital.feature.carteirinha.presentation.screen
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
 import com.rafaelcosta.myapplication.QrCode
 import com.senai.carteirinhadigital.R
 import com.senai.carteirinhadigital.feature.carteirinha.presentation.components.PerfilAluno
 
 @Composable
-fun CarteirinhaScreen(modifier: Modifier = Modifier) {
+fun CarteirinhaScreen(
+    modifier: Modifier = Modifier
+) {
     Box {
         Image(
-            painter = painterResource(id = R.drawable.redbg),
+            painter = painterResource(id = R.drawable.fundo),
             contentDescription = "Fundo",
             modifier = Modifier
-                .fillMaxSize(),
-            contentScale = ContentScale.FillBounds
+                .fillMaxSize()
+                .alpha(0.5f),
+            contentScale = ContentScale.Crop
         )
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceAround,
             modifier = modifier.fillMaxSize()
-
         ) {
-
+            Image(
+                painter = painterResource(id = R.drawable.logo),
+                contentDescription = "Logo Senai",
+                modifier = Modifier
+                    .fillMaxWidth(0.8f)
+            )
             PerfilAluno(
-                nome = "Raí Felipe",
+                nome = "Caio Merejoli",
                 curso = "Desenvolvimento de Sistemas"
             )
             QrCode(
-                conteudo = "90000000001755125820",
-                modifier = Modifier
-                    .padding(top = 50.dp)
-                    .size(250.dp)
-                    .border(2.dp, Color.Black)
+                conteudo = "jkhgkgfhgf"
             )
-
-            Image(
-                painter = painterResource(id = R.drawable.senai),
-                contentDescription = "Fundo",
-                modifier = Modifier
-                    .width(200.dp)
-            )
-
         }
-
     }
 }

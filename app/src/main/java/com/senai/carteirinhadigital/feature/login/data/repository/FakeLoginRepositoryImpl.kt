@@ -12,7 +12,7 @@ class FakeLoginRepositoryImpl : LoginRepository {
             Result.success(
                 UsuarioLogado(
                     id = "1",
-                    nome =  "Raí Felipe",
+                    nome =  "Caio Merejoli",
                     curso = "Desenvolvimento de Sistemas",
                     turma = "2DEVEST-B",
                     token = "token-fake"

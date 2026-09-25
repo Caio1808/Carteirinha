@@ -1,10 +1,9 @@
 package com.senai.carteirinhadigital.feature.login.presentation
 
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.senai.carteirinhadigital.feature.login.data.repository.FakeLoginRepositoryImpl
 import com.senai.carteirinhadigital.feature.login.data.repository.LoginRepository
+import com.senai.carteirinhadigital.feature.login.data.repository.LoginRepositoryProvider
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -12,7 +11,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
-    private val repository: LoginRepository = FakeLoginRepositoryImpl()
+    private val repository: LoginRepository = LoginRepositoryProvider.provide()
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(LoginUIState())
@@ -51,7 +50,7 @@ class LoginViewModel(
     private fun fazerLogin() {
         val state = _uiState.value
 
-        if(state.usuario.isBlank() || state.senha.isBlank()){
+        if (state.usuario.isBlank() || state.senha.isBlank()) {
             _uiState.update {
                 it.copy(
                     erroMessage = "Preencha login e senha"
@@ -93,6 +92,4 @@ class LoginViewModel(
                 }
         }
     }
-
-
 }

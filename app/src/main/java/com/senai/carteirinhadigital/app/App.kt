@@ -2,16 +2,17 @@ package com.senai.carteirinhadigital.app
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.rememberNavController
-import com.senai.carteirinhadigital.core.desingsystem.theme.CarteirinhaDigitalTheme
+import com.senai.carteirinhadigital.app.di.AppContainer
 import com.senai.carteirinhadigital.app.navegation.AppNavHost
+import com.senai.carteirinhadigital.core.desingsystem.theme.CarteirinhaDigitalTheme
 
 @Composable
-fun App() {
-    // Removidos os parênteses vazios daqui de fora
+fun App(container: AppContainer) {
     CarteirinhaDigitalTheme {
         val navController = rememberNavController()
         AppNavHost(
-            navController = navController
+            navController = navController,
+            container = container
         )
     }
 }

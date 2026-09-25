@@ -1,26 +1,28 @@
-package com.senai.carteirinhadigital.app
+package com.senai.carteirinhadigital.core.auth
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import com.senai.carteirinhadigital.core.desingsystem.theme.CarteirinhaDigitalTheme
-import com.senai.carteirinhadigital.feature.carteirinha.presentation.screen.CarteirinhaScreen
-import com.senai.carteirinhadigital.feature.login.presentation.screen.LoginScreen
+interface AuthTokenStore {
 
-class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            App()
-        }
-    }
+    fun getToken(): String?
+
+    fun setToken(token: String)
+
+    fun clearToken()
 }
 
+class InMemoryAuthTokenStore : AuthTokenStore {
 
+    @Volatile
+    private var token: String? = null
+
+    override fun getToken(): String? {
+        return token
+    }
+
+    override fun setToken(token: String) {
+        this.token = token
+    }
+
+    override fun clearToken() {
+        token = null
+    }
+}

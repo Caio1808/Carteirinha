@@ -6,94 +6,100 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.senai.carteirinhadigital.app.navegation.session.SessionViewModel
+import com.senai.carteirinhadigital.app.di.AppContainer
+import com.senai.carteirinhadigital.app.session.SessionViewModel
 import com.senai.carteirinhadigital.feature.carteirinha.presentation.screen.CarteirinhaScreen
-import com.senai.carteirinhadigital.feature.home.presentation.screen.HomeProfScreen
-import com.senai.carteirinhadigital.feature.home.presentation.screen.HomeProfScreen
-import com.senai.carteirinhadigital.feature.home.presentation.screen.HomeScreen
+import com.senai.carteirinhadigital.feature.home_aluno.presentation.screen.HomeScreen
 import com.senai.carteirinhadigital.feature.login.presentation.screen.LoginScreen
-import com.senai.carteirinhadigital.feature.turmas.domain.model.Turmas
-import com.senai.carteirinhadigital.feature.turmas.presetation.screen.TurmasScreen
-import com.senai.carteirinhadigital.feature.unidadescurriculares.presentation.screen.UcProfScreen
-import com.senai.carteirinhadigital.feature.unidadescurriculares.presentation.screen.UnidadeCurricularScreen
+import com.senai.carteirinhadigital.feature.unidadecurriculares.presentation.UnidadeCurricularViewModel
+import com.senai.carteirinhadigital.feature.unidadecurriculares.presentation.factory.UnidadeCurricularViewModelFactory
+import com.senai.carteirinhadigital.feature.unidadecurriculares.presentation.screen.UnidadeCurricularScreen
 
 @Composable
 fun AppNavHost(
     navController: NavHostController,
-    sessionViewModel: SessionViewModel = viewModel()
+    sessionViewModel: SessionViewModel = viewModel(),
+    container: AppContainer,
 ) {
     val usuarioLogado by sessionViewModel.usuarioLogado.collectAsStateWithLifecycle()
+    val usuario = usuarioLogado
+
     NavHost(
         navController = navController,
         startDestination = Routes.Login.route
     ) {
-        composable(Routes.Login.route) {  //Login
+        composable(Routes.Login.route) {
+
             LoginScreen(
-                navController=navController,
-                onLoginSucesso = {
-                    usuario ->
-
+                navController = navController,
+                onLoginSucesso = { usuario ->
+                    container.authTokenStore.setToken(usuario.token)
                     sessionViewModel.setusuarioLogado(usuario)
-                    navController.navigate(Routes.Home.route)
-
+                    navController.navigate(Routes.HomeAluno.route)
                 }
             )
         }
-        composable(Routes.Carteirinha.route) {  //Carteirinha
-            val usuario = usuarioLogado
-            if (usuario==null){
-                LaunchedEffect(Unit) {
-                    navController.navigate(Routes.Login.route)
-                }
-            }else {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    HomeScreen(
-                        navController = navController,
-                        modifier = Modifier.padding(innerPadding)
-                    )
 
-                }
-            }
+        composable(Routes.Carteirinha.route) {
             Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+
                 CarteirinhaScreen(
                     modifier = Modifier.padding(innerPadding)
                 )
             }
         }
 
-        composable(Routes.Home.route) {   //Home
-            Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                HomeScreen(
-                    navController = navController,
-                    modifier = Modifier.padding(innerPadding)
-                )
+        composable(Routes.HomeAluno.route) {
 
+            if (usuario == null) {
+                LaunchedEffect(Unit) {
+                    navController.navigate(Routes.Login.route)
+                }
+            } else {
+                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                    HomeScreen(
+                        navController = navController,
+                        modifier = Modifier.padding(innerPadding)
+                    )
+                }
             }
         }
 
-        composable(Routes.UnidadesCurriculares.route) {
-            Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                UnidadeCurricularScreen(
-                    navController = navController,
-                    modifier = Modifier.padding(innerPadding)
-                )
-            }
-        }
+        composable(Routes.UCAluno.route) {
 
-        composable(Routes.HomeProf.route) {
-            HomeProfScreen(navController = navController)
-        }
-        composable(Routes.Turmas.route) {
-            TurmasScreen(navController = navController)
-        }
-        composable(Routes.UcProf.route) {
-            UcProfScreen(navController = navController)
+            if (usuario == null) {
+                LaunchedEffect(Unit) {
+                    navController.navigate(Routes.Login.route)
+                }
+
+            } else {
+                val unidadeCurricularFactory = remember(
+                    container.unidadeCurricularRepository
+                ) {
+                    UnidadeCurricularViewModelFactory(
+                        repository = container.unidadeCurricularRepository
+                    )
+                }
+
+                val unidadeCurricularViewModel: UnidadeCurricularViewModel = viewModel(
+                    factory = unidadeCurricularFactory
+                )
+                Scaffold(
+                    modifier = Modifier.fillMaxSize()
+                ) { innerPadding ->
+
+                    UnidadeCurricularScreen(
+                        modifier = Modifier.padding(innerPadding)
+                    )
+                }
+            }
         }
     }
 }
